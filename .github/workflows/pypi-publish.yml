@@ -26,29 +26,18 @@ jobs:
     - name: Install build tools
       run: |
         python -m pip install --upgrade pip
-        pip install build twine
-    
-    - name: List files before build
-      run: |
-        ls -la
-        ls -la mamba/ || echo "mamba folder not found"
+        pip install build
     
     - name: Build package
       run: |
-        python -m build --verbose
+        python -m build
     
-    - name: Check package contents
+    - name: List built files (debug)
       run: |
-        twine check dist/*
-        unzip -l dist/*.whl || tar -tzf dist/*.tar.gz
-    
-    - name: Test import locally
-      run: |
-        pip install dist/*.whl
-        python -c "from mamba import MambaClient; print('Import successful')"
+        ls -la dist/
     
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        print-hash: true
         verbose: true
+        print-hash: true

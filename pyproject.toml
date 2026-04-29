@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mamba-security"
+version = "1.0.0"
+description = "Powerful and easy-to-use OSINT library for Python"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "CzaxStudio"}]
+requires-python = ">=3.8"
+dependencies = [
+    "requests>=2.28.0",
+    "dnspython>=2.2.0",
+    "python-whois>=0.7.0",
+]
+
+[project.scripts]
+mamba = "mamba.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/CzaxStudio/Mamba"
+Repository = "https://github.com/CzaxStudio/Mamba"
+
+[tool.setuptools]
+packages = ["mamba"]

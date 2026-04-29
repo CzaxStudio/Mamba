@@ -21,10 +21,10 @@
 pip install mamba-security
 ```
 ## Basic Usage
-
+```python
 from mamba import MambaClient, EmailReputation, DomainIntel
 
-# Create client
+
 client = MambaClient()
 
 # Email validation
@@ -40,10 +40,11 @@ print(f"Registrar: {result.data['registrar']}")
 
 # Clean up
 client.close()
-
+```
 
 ## Advanced(API)
 
+```python
 from mamba import MambaClient, IPInvestigator
 
 # Initialize with API keys
@@ -58,4 +59,6 @@ client.set_api_key("abuseipdb", "your-key")
 # Use IP reputation checking
 ip = IPInvestigator(client)
 result = ip.reputation_check("8.8.8.8")
+```
 
+Mamba --> Easy but powerful

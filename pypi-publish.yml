@@ -9,6 +9,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
     - uses: actions/checkout@v4
     
@@ -23,15 +27,10 @@ jobs:
         pip install build twine
     
     - name: Build package
-      run: |
-        python -m build
+      run: python -m build
     
     - name: Check package
-      run: |
-        twine check dist/*
+      run: twine check dist/*
     
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
-        verbose: true

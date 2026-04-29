@@ -5,12 +5,9 @@ on:
   push:
     tags:
       - 'v*'
-  release:
-    types: [published]
 
 jobs:
-  pypi-publish:
-    name: Publish mamba-security to PyPI
+  build-and-publish:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -25,22 +22,34 @@ jobs:
       with:
         python-version: '3.10'
     
-    - name: Install build dependencies
+    - name: Install build tools
       run: |
         python -m pip install --upgrade pip
-        pip install build
+        pip install build setuptools wheel
+    
+    - name: List files before build
+      run: |
+        echo "=== Current directory ==="
+        ls -la
+        echo "=== mamba directory ==="
+        ls -la mamba/ || echo "ERROR: mamba directory not found"
+        echo "=== Check __init__.py ==="
+        cat mamba/__init__.py | head -5 || echo "ERROR: __init__.py missing"
     
     - name: Build package
       run: |
-        python -m build
+        python -m build --verbose
     
-    - name: Verify package contents
+    - name: List build artifacts
       run: |
         ls -la dist/
-        python -c "import zipfile; z = zipfile.ZipFile('dist/*.whl'); print('Files in wheel:', len(z.namelist()))" || true
+    
+    - name: Test import
+      run: |
+        pip install dist/*.whl
+        python -c "from mamba import MambaClient; print('Import successful')"
     
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         verbose: true
-        print-hash: true

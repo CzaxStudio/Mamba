@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "mamba-security"
 version = "1.0.0"
-description = "Powerful and easy-to-use OSINT library for Python"
+description = "Powerful OSINT library for Python"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [{name = "CzaxStudio"}]
@@ -19,9 +19,9 @@ dependencies = [
 [project.scripts]
 mamba = "mamba.cli:main"
 
-[project.urls]
-Homepage = "https://github.com/CzaxStudio/Mamba"
-Repository = "https://github.com/CzaxStudio/Mamba"
-
 [tool.setuptools]
 packages = ["mamba"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+mamba = ["*.py", "*.pyi"]
